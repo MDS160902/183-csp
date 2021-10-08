@@ -5,10 +5,12 @@
 
 
 ### Über unser Backend
-
+- Michi => 0 - 2
+- Loris => 3 - 7
+- Lenny => 8 - 10
 
 ### OWASP Top Ten
-- Broken Access Control
+- Broken Access Control ()
 - Cryptographic Failures
 - Injection
 - Insecure Desing
