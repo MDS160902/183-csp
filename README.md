@@ -5,8 +5,8 @@
 
 
 ### Über unser Backend
-- Michi => 0 - 2
-- Loris => 3 - 7
+- Michi => 1 - 3
+- Loris => 4 - 7
 - Lenny => 8 - 10
 
 ### OWASP Top Ten
