@@ -24,5 +24,5 @@
 ####
 Added in 2021
 - Insecure Design
-- Software and Data integrity falures
+- Software and Data integrity failures
 - Server-side request forgery
