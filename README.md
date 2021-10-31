@@ -28,42 +28,42 @@
 
 
 
-### Broken Access Control
+### Broken Access Control
 #### Description
 
 #### What could work?
 
 #### What did work?
 
-### Cryptographic Failures
+### Cryptographic Failures
 #### Description
 
 #### What could work?
 
 #### What did work?
 
-### Injection
+### Injection
 #### Description
 
 #### What could work?
 
 #### What did work?
 
-### Insecure Desing
+### Insecure Desing
 #### Description
 
 #### What could work?
 
 #### What did work?
 
-### Security Misconfiguration
+### Security Misconfiguration
 #### Description
 
 #### What could work?
 
 #### What did work?
 
-### Vulnerable and outdated Components
+### Vulnerable and outdated Components
 #### Description
 
 #### What could work?
@@ -77,42 +77,42 @@
 
 #### What did work?
 
-### Software and Data Integrity Failures
+### Software and Data Integrity Failures
 #### Description
 
 #### What could work?
 
 #### What did work?
 
-### Security Logging and Monitoring Failures
+### Security Logging and Monitoring Failures
 #### Description
 
 #### What could work?
 
 #### What did work?
 
-### Server-Side Request Forgery
+### Server-Side Request Forgery
 #### Description
 
 #### What could work?
 
 #### What did work?
 
-### Insecure Design
+### Insecure Design
 #### Description
 
 #### What could work?
 
 #### What did work?
 
-### Software and Data integrity failures
+### Software and Data integrity failures
 #### Description
 
 #### What could work?
 
 #### What did work?
 
-### Server-side request forgery
+### Server-side request forgery
 #### Description
 
 #### What could work?
