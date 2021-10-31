@@ -20,3 +20,9 @@
 - Software and Data Integrity Failures
 - Security Logging and Monitoring Failures
 - Server-Side Request Forgery
+
+####
+Added in 2021
+- Insecure Design
+- Software and Data integrity falures
+- Server-side request forgery
