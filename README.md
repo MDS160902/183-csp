@@ -214,7 +214,8 @@ Create whitelists or blacklists for requests and accesses from certain services.
 
 
 
-## Some good ressources about infosec
+## Some good resources about infosec
+
 These are two very good podcasts I love to listen to.  
 
 DarknetDiaries is more on the journalistic side that talks, and interviews people related to infosec or talks about things like notPetya. 
