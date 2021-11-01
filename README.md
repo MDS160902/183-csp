@@ -1,4 +1,4 @@
-# Dokuemntation Projekt @Loris Polenz, @Michael de Smitt, @Lenny Lam
+# Dokumentation Projekt @Loris Polenz, @Michael de Smitt, @Lenny Lam
 
 
 ### Über unser Projekt
@@ -135,4 +135,6 @@ Create whitelists or blacklists for requests and accesses from certain services.
 #### What could work?
 
 #### What did work?
+
+#### Presentation (Canva link): https://www.canva.com/design/DAEuhcPueKY/share/preview?token=6YGSIv3_85jt-YAkM6a3ew&role=EDITOR&utm_content=DAEuhcPueKY&utm_campaign=designshare&utm_medium=link&utm_source=sharebutton
 
