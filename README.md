@@ -3,14 +3,18 @@
 
 
 ### About our Project
-
+The goal of this project was to get to know the individual OWASP top 10 and see how they work and how to secure an application against them. We did not use any tools since the configuration of a tool would be way more work than the actual goal of learning about the vulnerabilities. How a tool should be configured can be learned with a good YouTube video. Analyzing and making suggestions on how to secure the very application we wrote is not something we can learn in a YouTube video.
 
 ### About our Backend
+The Project we used to test our theses and make suggestions based on is a game we develop for someone. We started this project over a year ago and are still working on it. Since we will use this code in production security is a very big part. That’s why we combined this module and the game go get a step further into finishing our first version.
+
+We built a Spring Boot backend with a REST API as the main interface. There is a response via web sockets, but these weren’t relevant in this project since it is a very small part. We are using a MariaDB Database hosted on a VPS. We access the database via JPA Hibernate as a ORM.
+
 
 
 ### OWASP Top Ten
 - Broken Access Control
-- Cryptographic Failures
+- Cryptographic Failures aka sensitive data exposure
 - Injection
 - Insecure Desing
 - Security Misconfiguration
@@ -19,11 +23,6 @@
 - Software and Data Integrity Failures
 - Security Logging and Monitoring Failures
 - Server-Side Request Forgery
-
-#### Added in 2021
-- Insecure Design
-- Software and Data integrity failures
-- Server-side request forgery
 
 
 
@@ -166,71 +165,6 @@ They provide the features we need and are way better maintained and tested than 
 - - This issue is not solvable in a technical way. We need to make all our developers aware that using unprotected SSH-Keys can lead to serious problems. I think this point is especially important, since it shows that in security at the last instance is depended on the human user. 2FA can be perfect, but useless if no one uses it. 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 ### Software and Data Integrity Failures
 #### Description
 Insecure Deserialization vulnerability covers software and data integrity issues. This issue can happen when the identity of the apps or data is not checked or verification process is not well-rounded (that is, it can be bypassed or validation failure still lets the app to run) The Fix: Always ensure that the app you are using is trusted and uses sane security practices.
@@ -272,3 +206,20 @@ Create whitelists or blacklists for requests and accesses from certain services.
 
 #### Presentation (Canva link): https://www.canva.com/design/DAEuhcPueKY/share/preview?token=6YGSIv3_85jt-YAkM6a3ew&role=EDITOR&utm_content=DAEuhcPueKY&utm_campaign=designshare&utm_medium=link&utm_source=sharebutton
 
+
+
+
+
+
+
+
+
+## Some good ressources about infosec
+These are two very good podcasts I love to listen to.  
+
+DarknetDiaries is more on the journalistic side that talks, and interviews people related to infosec or talks about things like notPetya. 
+
+The other one is more about what happens in the open source community in the security perspective
+
+- https://darknetdiaries.com/
+- https://opensourcesecurity.io/category/podcast/
