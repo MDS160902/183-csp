@@ -60,33 +60,145 @@ Cross Site Scripting attacks could work.
 We are using libraries like hibernate and Java-spring security. To increase the safety we could use "Query parameterization". This means that we seperate the SQL statement from any kind of parameters if someone would try to get data with an sql statement in our login form for example.
 To prevent Cross Site Scripting we could filter "input on arrival" (When user input is received, filter as strictly as possible) and "encode data on output" (When user-controllable data is output in HTTP responses, encode the output. Like that the output wiull not be interpreted as active content).
 
-### Insecure Desing
-#### Description
 
-#### What could work?
 
-#### What did work?
+
+
+
+
+
+### Insecure Design
+The cause of a vulnerability can be a software design that is from the beginning on insecure. In the case of insecure design software is built having vulnerabilities. One of the biggest problems with insecure design is, that it cannot be fixed with perfect implementation. In such a case the perfect implementation does still contain the flaw. Insecure design or verification patterns do also count as insecure design. 
+If a server returns the profile information behind a phone number, it is possible for attackers to exploit this vulnerability and find the phone numbers of influential people through brute forcing these numbers.
+In this case the developer who created the specific feature did nothing wrong. It seemed to them like it was made with intention and not thinking about the risks of this feature.
+
+#### What could word?
+- Users get deleted from the database and not as inactive flagged
+- - Now if someone breaches a profile and deletes it, we do not have any chance to restore the deleted account. This flaw would most certainly result in data loss.
+- No rate limits 
+- - We currently do not have any rate limits in place. It theoretically would be possible to brute force every password of every user and we would not notice it. 
+- No return restricions
+-  - In one query we do return every card we have in our table. In theory this query does work just perfect. Until we add new cards for a future release. Then an attacker could see and leak these not released cards. 
+- Returning password hashes
+- - If a user registers on our application we return the user object, like it is stored in the database. So, we also return our password hashes which is a very bad idea.
+
+#### What does work?
+-	Users get deleted from the database and not as inactive flagged. 
+- - Flagging a user as deleted and not allowing our endpoints to do anything with this user would have the same effect as a completely deleted user while adding the possibility of reinstating a wrongly deleted user.
+-	No rate limits
+- - The easiest way to fix this issue would be to create a maximum login tries per minute. Solving the problem this way would then open another design flaw. It would be very easy for an attacker to DOS a person’s login. Probably the best easy solution would be to add the IP address as a parameter. In this case we could rate limit requests from a specific IP, making it harder to DOS someone.
+-	No return restrictions
+- - This flaw could be fixed easy by adding a release status in the database and only requesting the “RELEASED” cards. This way it is not possible to get an “UNRELEASED” card.
+-	Returning password hash
+-	- The solution to this flaw is easy too. We either just replace the password hash with null in the returning object or we create a new object with no hash and return this to the client.
+
+
 
 ### Security Misconfiguration
-#### Description
+Either software or a whole system can be misconfigured. The cause of a flaw is considered as that when it would be fixable by changing / crating a configuration. A good example for this would be not closing ports that are not used by the application. A wrong / non existing configuration in an application can also cause such a flaw. For example, if the software in production is still in development configured. This way test credentials, or filters could be an issue.
 
-#### What could work?
+#### What could be an issue?
+-	No port overviews
+- - On our server we do not have an overview which ports are open, and which are not. That can cause, that services are accessible to the internet even though they shouldn’t.
+-	 Whole routes are authentication free
+- - Our backend needs some API Endpoints that are accessible without an Authentication Token. These could be the “register” and “login” endpoint. Since now only these two endpoints run on “/api/v1/users/” we defined in our security configuration that everything after [..]/users/ is whitelisted from our authentication. This could cause the problem, that new user related endpoints get added and are then unprotected. 
+-	Database user has root access on all databases
+- - In order to develop easier, we decided to create a DB user with all privileges on every database on the server. In case of a data breach or SQL Injection the attacker could do everything with every database on our system.
 
-#### What did work?
+#### What could work
+The above-mentioned vulnerabilities are all existing on our system.  The following steps could solve these issues.
+-	No port overviews
+- - With some easy commands it is possible to see which ports are open. For example, with ``` netstat -tulpn | grep LISTEN ``` it is possible to see all open ports with their services on a system. Since this requires some time to do this check, I would create a chron job that sends out an email every week with the open server ports. 
+-	Whole routes are authentication free
+- - This issue is easy to fix. It is possible to not use any wild cards in the whitelisting configuration. This way the configuration would grow, but our project would be way less susceptible to human error. 
+-	Database user has root access on all databases
+- - This problem could be solved by restricting access to needed databases, including restricting the action a database needs to perform. For example, would our backend user only need to read and write on one database. Another database could be restricted to read only. This would increase the time to manage accounts but also significantly increase application security.
+
 
 ### Vulnerable and outdated Components
-#### Description
+Such a flaw can be caused by not maintaining software and dependencies. No developer codes everything by himself and creates a 100% secure system, so we use third party software such as frameworks, libraries or DBMS. Every single third-party software has security flaws too, some more and others less. Since a framework for example basically injects code into mine, every flaw in the framework becomes a problem for my software. 
+There are automated tools to support the developer on keeping components save. But relying on third-party software to keep third-party software secure is not optimal too. The best way to keep a space save is limiting the use of third-party software and take the time to code it yourself. Also keeping track what is happening in the infosec space can help to get to know possible vulnerabilities firsthand.
 
-#### What could work?
+#### How to work on a such issues?
+Checking every dependency for possible flaws would overreach the scope of this project. There is one example that would illustrate a good process.
+I know from reading about infosec that there were two known vulnerabilities to hibernate. We use hibernate in our project for database interaction our project would have been affected by at least one of two vulnerabilities.  These two vulnerabilities enabled SQL to databases through hibernate. This should not be possible. 
+After a quick google search, I found the CVE id’s for these two vulnerabilities. 
 
-#### What did work?
+https://www.cvedetails.com/cve/CVE-2020-25638/
+https://www.cvedetails.com/cve/CVE-2019-14900/
 
-### Identification and Authentification Failures
-#### Description
+After having a quick read on the above pages I knew that all Hibernate versions before 5.3.18, 5.4.18 and 5.5.0.Beta1 had this one of the flaws. The other flaw was existent until 5.4.23.Final. Based on this information I could have a look at our version of Hibernate and conclude that we aren’t affected anymore.
 
-#### What could work?
+Also Intellij would tell us if a maven dependency is out of date, but as I said. Third-party software checking third-party software.
 
-#### What did work?
+Following similar steps to the above can increase application security by a lot but it can be very time intensive, especially if the developer does this in their free time.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ### Software and Data Integrity Failures
 #### Description
