@@ -5,9 +5,7 @@
 
 
 ### About our Backend
-- Michi => 1 - 3
-- Loris => 4 - 7
-- Lenny => 8 - 10
+
 
 ### OWASP Top Ten
 - Broken Access Control
@@ -33,8 +31,9 @@
 In Web Apps there are often different kind of groups who have different kind of Access Permissions on Data or parts of the application. Such as „admins“, „normal users“ or „audits“.  A „normal user“ is not allowed to login as an admin and doesn’t has the same permissions as an admin.
 
 #### What could work?
-
+If a user has a URL from an admin page, he could theoretically reach the page without having to identify himself, if there is no Access Control
 #### What did work?
+Nothing! We have an Build Access Control - We test if a user has admin rights. We could on top of that use the Principle of least privilege.
 
 ### Cryptographic Failures
 #### Description
