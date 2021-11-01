@@ -124,8 +124,8 @@ Checking every dependency for possible flaws would overreach the scope of this p
 I know from reading about infosec that there were two known vulnerabilities to hibernate. We use hibernate in our project for database interaction our project would have been affected by at least one of two vulnerabilities.  These two vulnerabilities enabled SQL to databases through hibernate. This should not be possible. 
 After a quick google search, I found the CVE id’s for these two vulnerabilities. 
 
-https://www.cvedetails.com/cve/CVE-2020-25638/
-https://www.cvedetails.com/cve/CVE-2019-14900/
+- https://www.cvedetails.com/cve/CVE-2020-25638/
+- https://www.cvedetails.com/cve/CVE-2019-14900/
 
 After having a quick read on the above pages I knew that all Hibernate versions before 5.3.18, 5.4.18 and 5.5.0.Beta1 had this one of the flaws. The other flaw was existent until 5.4.23.Final. Based on this information I could have a look at our version of Hibernate and conclude that we aren’t affected anymore.
 
@@ -133,6 +133,37 @@ Also Intellij would tell us if a maven dependency is out of date, but as I said.
 
 Following similar steps to the above can increase application security by a lot but it can be very time intensive, especially if the developer does this in their free time.
 
+
+
+### Identification and Authentification Failures
+As a service provider I must ensure that the person that is authenticating is authentic. If I fail to do so there is a design issue (insecure design) or authentication failures. Generally, an authentication failure is counted as such if it is possible for an attacker to imitate a user and make actions on behave of the user.  Example for such vulnerabilities would be CSRF, Cookie stealing or allowing very insecure passwords. Obviously, it is not possible to ensure 100% correct security since it is always a compromise between security and user experience. In. order to ensure security a developer must take the necessary steps to protect the user as good as possible. Security before usability.
+
+#### What could work?
+-	No 2FA
+-- At the moment it is not possible for a user to enable 2FA such as security keys or authenticator apps. This takes a layer of security.
+-	Not possible to revoke JWT
+--	Our authentication works with JSON web tokens. These tokens do expire after some time but are not tied to a client’s browser or user-agent. If a user logs out of our service, we just destroy the cookie containing the key. 
+-	Every password allowed.
+-- We do not restrict passwords. So, it would be possible to have “a” as a password. 
+-	Own services
+-- We use authentication services created by us. This is a good method for smaller projects but not really suited for bigger production project. Especially with our resources and knowledge. 
+-	SSH-Keys are not password protected
+-- Some of our developers use ssh keys that are not password protected. This is a very big risk since we cannot ensure the authenticity of this key.
+
+What did work? 
+All the issues above are a real threat to our application. We could take the following steps to solve the issues.
+-	No 2FA
+-	Own Services
+-	Every password allowed
+-- All the above-mentioned issues could be resolved if we would use a authentication solution that is open source, self-hosted and maintained by a bigger group with more resources. Examples for such services could be the following.
+ory.sh
+keycloak.org
+
+They provide the features we need and are way better maintained and tested than our own software. 
+-	Not possible to revoke JWT
+-- Since it is not possible to invalidate a JWT by design we would have to store every JWT in a database and then delete it when the user logs out. This would ruin the whole approach behind JWT’s. That’s why we could also include information about the user’s client such as ip-address, browser type, user-agent and create a fingerprint for every user. This would increase security since it then would be way harder to steal the token and use it elsewhere maliciously. 
+-	SSH-Keys are not password protected
+-- This issue is not solvable in a technical way. We need to make all our developers aware that using unprotected SSH-Keys can lead to serious problems. I think this point is especially important, since it shows that in security at the last instance is depended on the human user. 2FA can be perfect, but useless if no one uses it. 
 
 
 
