@@ -32,14 +32,14 @@
 In Web Apps there are often different kind of groups who have different kind of Access Permissions on Data or parts of the application. Such as „admins“, „normal users“ or „audits“.  A „normal user“ is not allowed to login as an admin and doesn’t has the same permissions as an admin.
 
 #### What could work?
-If a user has a URL from an admin page, he could theoretically reach the page without having to identify himself, beacuse we dont have an Access Control
+If a user has a URL from an admin page, he could theoretically reach the page without having to identify himself, beacuse we dont have an role-based Access Control
 
 #### What did work?
-Everything worked, because we do not have an Access Control. To prevent Broken Access Control we could of course build a strong Access Control. On top oft that we could use the "Principle of least privilege". With this we give the minimum of time and functionalities to this particular user. 
+Everything worked. We do have an Access Control but its not role-based. To prevent Broken Access Control we could do a few things. First of all we should create a role-based Acces control. On top oft that we could use the "Principle of least privilege". With this we give the minimum of time and functionalities to this particular user.
 
 ### Cryptographic Failures aka Sensitive Data Exposures
 #### Description
-Hackers want to expose data. They use different kind of attacks to do that. A website has often a few Pages. If one of these pages doesn’t has sensitive data, they are sometimes encrypted with HTTP. So its easier to expose Data from this website
+Hackers want to expose data. They use different kind of attacks to do that. A website has often a few Pages. If one of these pages doesn’t has sensitive data, they are sometimes encrypted with HTTP instead of TLS fr example. So its easier to expose Data from this website.
 
 #### What could work?
 We dont have an SSL Certificat - we transfer all user data via http. Sensitive Data could be exposed.
@@ -140,30 +140,30 @@ As a service provider I must ensure that the person that is authenticating is au
 
 #### What could work?
 -	No 2FA
--- At the moment it is not possible for a user to enable 2FA such as security keys or authenticator apps. This takes a layer of security.
+- - At the moment it is not possible for a user to enable 2FA such as security keys or authenticator apps. This takes a layer of security.
 -	Not possible to revoke JWT
---	Our authentication works with JSON web tokens. These tokens do expire after some time but are not tied to a client’s browser or user-agent. If a user logs out of our service, we just destroy the cookie containing the key. 
+- -	Our authentication works with JSON web tokens. These tokens do expire after some time but are not tied to a client’s browser or user-agent. If a user logs out of our service, we just destroy the cookie containing the key. 
 -	Every password allowed.
--- We do not restrict passwords. So, it would be possible to have “a” as a password. 
+- - We do not restrict passwords. So, it would be possible to have “a” as a password. 
 -	Own services
 -- We use authentication services created by us. This is a good method for smaller projects but not really suited for bigger production project. Especially with our resources and knowledge. 
 -	SSH-Keys are not password protected
--- Some of our developers use ssh keys that are not password protected. This is a very big risk since we cannot ensure the authenticity of this key.
+- - Some of our developers use ssh keys that are not password protected. This is a very big risk since we cannot ensure the authenticity of this key.
 
 What did work? 
 All the issues above are a real threat to our application. We could take the following steps to solve the issues.
 -	No 2FA
 -	Own Services
 -	Every password allowed
--- All the above-mentioned issues could be resolved if we would use a authentication solution that is open source, self-hosted and maintained by a bigger group with more resources. Examples for such services could be the following.
-ory.sh
-keycloak.org
+- - All the above-mentioned issues could be resolved if we would use a authentication solution that is open source, self-hosted and maintained by a bigger group with more resources. Examples for such services could be the following.
+- https://ory.sh
+- https://keycloak.org
 
 They provide the features we need and are way better maintained and tested than our own software. 
 -	Not possible to revoke JWT
--- Since it is not possible to invalidate a JWT by design we would have to store every JWT in a database and then delete it when the user logs out. This would ruin the whole approach behind JWT’s. That’s why we could also include information about the user’s client such as ip-address, browser type, user-agent and create a fingerprint for every user. This would increase security since it then would be way harder to steal the token and use it elsewhere maliciously. 
+- - Since it is not possible to invalidate a JWT by design we would have to store every JWT in a database and then delete it when the user logs out. This would ruin the whole approach behind JWT’s. That’s why we could also include information about the user’s client such as ip-address, browser type, user-agent and create a fingerprint for every user. This would increase security since it then would be way harder to steal the token and use it elsewhere maliciously. 
 -	SSH-Keys are not password protected
--- This issue is not solvable in a technical way. We need to make all our developers aware that using unprotected SSH-Keys can lead to serious problems. I think this point is especially important, since it shows that in security at the last instance is depended on the human user. 2FA can be perfect, but useless if no one uses it. 
+- - This issue is not solvable in a technical way. We need to make all our developers aware that using unprotected SSH-Keys can lead to serious problems. I think this point is especially important, since it shows that in security at the last instance is depended on the human user. 2FA can be perfect, but useless if no one uses it. 
 
 
 
